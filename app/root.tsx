@@ -1,4 +1,4 @@
-import type { LinksFunction } from "@remix-run/cloudflare";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import {
   Links,
@@ -7,11 +7,17 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  json,
 } from "@remix-run/react";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
+
+export const loader = (args: LoaderFunctionArgs) => {
+  console.log(args.context.env);
+  return json({});
+};
 
 export default function App() {
   return (
