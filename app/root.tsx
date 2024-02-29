@@ -7,19 +7,19 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  json,
 } from "@remix-run/react";
+import { rootAuthLoader } from "@clerk/remix/ssr.server";
+import { ClerkApp, ClerkErrorBoundary } from "@clerk/remix";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
-export const loader = (args: LoaderFunctionArgs) => {
-  console.log(args.context.env);
-  return json({});
-};
+export const loader = (args: LoaderFunctionArgs) => rootAuthLoader(args);
 
-export default function App() {
+export const ErrorBoundary = ClerkErrorBoundary();
+
+function App() {
   return (
     <html lang="en">
       <head>
@@ -37,3 +37,5 @@ export default function App() {
     </html>
   );
 }
+
+export default ClerkApp(App);
