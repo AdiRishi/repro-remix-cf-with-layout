@@ -19,7 +19,7 @@ export const loader = (args: LoaderFunctionArgs) => rootAuthLoader(args);
 
 export const ErrorBoundary = ClerkErrorBoundary();
 
-function App() {
+export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
@@ -29,13 +29,17 @@ function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        {children}
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
       </body>
     </html>
   );
+}
+
+function App() {
+  return <Outlet />;
 }
 
 export default ClerkApp(App);
